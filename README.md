@@ -50,6 +50,19 @@ do
    java -jar /export2/liuhw/software/Trimmomatic-0.39/trimmomatic-0.39.jar SE -phred33 $indir/${a}_1.fastq.gz $outdir/${a}_1.clean.fastq.gz  ILLUMINACLIP:/export2/liuhw/software/Trimmomatic-0.39/adapters/TruSeq2-SE.fa:2:30:10 SLIDINGWINDOW:5:20 LEADING:20 TRAILING:20 MINLEN:75 & 
 done
 ```
+* **Single End example**: 
+```
+java -jar trimmomatic-0.35.jar PE -phred33 input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+```
+* **Paired End example**: 
+```
+java -jar trimmomatic-0.35.jar PE -phred33 input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+```
+* Remove adapters (ILLUMINACLIP:TruSeq3-PE.fa:2:30:10)
+* Remove leading low quality or N bases (below quality 3) (LEADING:3)
+* Remove trailing low quality or N bases (below quality 3) (TRAILING:3)
+* Scan the read with a 4-base wide sliding window, cutting when the average quality per base drops below 15 (SLIDINGWINDOW:4:15)
+* Drop reads below the 36 bases long (MINLEN:36)
 
 ## fastqc
 ```
@@ -62,6 +75,7 @@ cd ./clean_fastq
 $fastqc *fastq.gz
 multiqc .
 ```
+* multiqc整合一下结果
 
 ## hisat2 and samtool
 ```
@@ -83,6 +97,15 @@ do
  $hisat -p 60 --dta -x $GRCh38 -U $indir/${a}_1.clean.fastq.gz | samtools view -Sbh - > $outdir/${a}.bam
 done
 ```
+* **Single End example**: 
+```
+hisat2 -f -x genome_index -U reads_1.fastq -S eg1.sam
+```
+* **Paired End example**: 
+```
+hisat -f -x genome_index -1 reads_1.fastq -2 reads_2.fastq -S eg2.sam
+```
+* 用samtool把sam转为bam
 
 ## sort bam
 ```
