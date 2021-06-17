@@ -1,4 +1,4 @@
-# Bulk-RNAseq-pipline
+# Bulk-RNAseq-pipline(hisat2-StringTie-DEseq2)
 ## Download data via SRAToolkit
 ```
 cd /export2/liuhw/Bulk_RNA_seq/workflow_test/
