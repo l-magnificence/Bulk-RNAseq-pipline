@@ -24,10 +24,10 @@ outdir=${file_path}/fastq
 
 for file in `ls $indir | grep .sra`;
 do
-	a=${file%.sra*};
- 	echo ----------
- 	echo ${a}
- 	/export/bioinfo-team/home/liuhw/software/SRAToolkit/sratoolkit.2.10.9-ubuntu64/bin/fastq-dump $indir/${a}.sra --gzip --split-files -O $outdir/
+ a=${file%.sra*};
+ echo ----------
+ echo ${a}
+ /export/bioinfo-team/home/liuhw/software/SRAToolkit/sratoolkit.2.10.9-ubuntu64/bin/fastq-dump $indir/${a}.sra --gzip --split-files -O $outdir/
 done
 ```
 * #### 只有一个fastq为Single end 
@@ -38,16 +38,16 @@ done
 mkdir clean_fastq
 ##nohup bash rna.sh  > clean.log 2>&1 &
 
- file_path=/export2/liuhw/Bulk_RNA_seq/workflow_test/SRP200940/
- indir=${file_path}/fastq
- outdir=${file_path}/clean_fastq
+file_path=/export2/liuhw/Bulk_RNA_seq/workflow_test/SRP200940/
+indir=${file_path}/fastq
+outdir=${file_path}/clean_fastq
  
 for file in `ls $indir | grep 1.fastq.gz`;
 do
-   a=${file%_1.fastq.gz*}; 
-   echo ----------
-   echo ${a};
-   java -jar /export2/liuhw/software/Trimmomatic-0.39/trimmomatic-0.39.jar SE -phred33 $indir/${a}_1.fastq.gz $outdir/${a}_1.clean.fastq.gz  ILLUMINACLIP:/export2/liuhw/software/Trimmomatic-0.39/adapters/TruSeq2-SE.fa:2:30:10 SLIDINGWINDOW:5:20 LEADING:20 TRAILING:20 MINLEN:75 & 
+ a=${file%_1.fastq.gz*}; 
+ echo ----------
+ echo ${a};
+ java -jar /export2/liuhw/software/Trimmomatic-0.39/trimmomatic-0.39.jar SE -phred33 $indir/${a}_1.fastq.gz $outdir/${a}_1.clean.fastq.gz  ILLUMINACLIP:/export2/liuhw/software/Trimmomatic-0.39/adapters/TruSeq2-SE.fa:2:30:10 SLIDINGWINDOW:5:20 LEADING:20 TRAILING:20 MINLEN:75 & 
 done
 ```
 * **Single End example**: 
@@ -119,11 +119,11 @@ outdir=${file_path}/sorted_bam
  
 for file in `ls $indir | grep .bam`;
 do
- 	a=${file%.bam*};
-	echo ----------
-	echo ${a}
-	date
-	samtools sort -@ 30 -o $outdir/${a}.sort.bam $indir/${a}.bam
+ a=${file%.bam*};
+ echo ----------
+ echo ${a}
+ date
+ samtools sort -@ 30 -o $outdir/${a}.sort.bam $indir/${a}.bam
 done
 ```
 
