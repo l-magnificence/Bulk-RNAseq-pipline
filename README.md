@@ -186,7 +186,7 @@ ballgown_dir=${file_path}/ballgown2
  echo -------------;
  echo ${a};
  date
- $stringtie -e -B -p 50 -G $GRCh38_gtf -o $ballgown_dir/${a}/${a}.gtf -A ${a}.gene_abund.tab $indir/${a}.sort.bam
+ $stringtie -e -B -p 50 -G $GRCh38_gtf -o $ballgown_dir/${a}/${a}.gtf -A $ballgown_dir/${a}/${a}.gene_abund.tab $indir/${a}.sort.bam
  done
 ``` 
 
