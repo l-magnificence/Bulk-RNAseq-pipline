@@ -127,7 +127,7 @@ do
 done
 ```
 
-## StringTie
+## StringTie including new transcript that don't exist in reference
 ```
 mkdir stringtie_gtf
 mkdir ballgown
@@ -135,7 +135,7 @@ mkdir ballgown
 
 file_path=/export2/liuhw/Bulk_RNA_seq/workflow_test/SRP200940/
 stringtie=/Shared_Software/Genomic/stringtie-2.1.4.Linux_x86_64/stringtie
-GRCh38_gtf=/Shared_Software/ref_genome/refdata-gex-GRCh38-2020-A/genes/genes.gtf
+GRCh38_gtf=/Shared_Software/ref_genome/GRCh38_gtf/Homo_sapiens.GRCh38.100.gtf
 
 outdir=${file_path}/stringtie_gtf
 indir=${file_path}/sorted_bam
@@ -167,7 +167,28 @@ do
  date
  $stringtie -e -B -p 50 -G $file_path/merged.gtf -o $ballgown_dir/${a}/${a}.gtf $indir/${a}.sort.bam
 done
+```  
+
+## StringTie only including transcripts that exist in reference
 ```
+file_path=/export2/liuhw/Bulk_RNA_seq/workflow_test/SRP200940/
+stringtie=/Shared_Software/Genomic/stringtie-2.1.4.Linux_x86_64/stringtie
+GRCh38_gtf=/Shared_Software/ref_genome/GRCh38_gtf/Homo_sapiens.GRCh38.100.gtf
+
+indir=${file_path}/sorted_bam
+ballgown_dir=${file_path}/ballgown2
+
+ echo ----------
+ echo "counting transcript"
+ for file in `ls $indir | grep .sort.bam`;
+ do
+ a=${file%.sort.bam*};
+ echo -------------;
+ echo ${a};
+ date
+ $stringtie -e -B -p 50 -G $GRCh38_gtf -o $ballgown_dir/${a}/${a}.gtf -A ${a}.tab $indir/${a}.sort.bam
+ done
+``` 
 
 ## ballgown to DEseq2
 ```
