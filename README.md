@@ -63,7 +63,7 @@ java -jar trimmomatic-0.35.jar PE -phred33 input_forward.fq.gz input_reverse.fq.
 * Remove trailing low quality or N bases (below quality 3) (TRAILING:3)
 * Scan the read with a 4-base wide sliding window, cutting when the average quality per base drops below 15 (SLIDINGWINDOW:4:15)
 * Drop reads below the 36 bases long (MINLEN:36)
-
+* 对于双端测序数据，指定了2个输入文件和4个输出文件，其中2个用于“成对”输出（数据处理后，read1，read2同时存在,用于后续的hisat2），2个用于“未成对”输出（数据处理后，read1或read2缺失）
 ## fastqc
 ```
 # conda activate macs2
